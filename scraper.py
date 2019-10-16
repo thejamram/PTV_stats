@@ -1,24 +1,24 @@
-# This is a template for a Python scraper on morph.io (https://morph.io)
-# including some code snippets below that you should find helpful
+from bs4 import BeautifulSoup 
+import requests 
+import re 
+import csv
+import pandas as pd
 
-# import scraperwiki
-# import lxml.html
-#
-# # Read in a page
-# html = scraperwiki.scrape("http://foo.com")
-#
-# # Find something on the page using css selectors
-# root = lxml.html.fromstring(html)
-# root.cssselect("div[align='left']")
-#
-# # Write out to the sqlite database using scraperwiki library
-# scraperwiki.sqlite.save(unique_keys=['name'], data={"name": "susan", "occupation": "software developer"})
-#
-# # An arbitrary query against the database
-# scraperwiki.sql.select("* from data where 'name'='peter'")
+df = pd.DataFrame(columns=['Date','% delivered', '% on time'])
 
-# You don't have to do things with the ScraperWiki and lxml libraries.
-# You can use whatever libraries you want: https://morph.io/documentation/python
-# All that matters is that your final data is written to an SQLite database
-# called "data.sqlite" in the current working directory which has at least a table
-# called "data".
+url = "https://www.ptv.vic.gov.au/footer/data-and-reporting/network-performance/daily-performance/" 
+res = requests.get(url) 
+soup = BeautifulSoup(res.text, 'html.parser') 
+data = [] 
+tableRows = soup.find_all('table')[0].find_all('tr') 
+
+for row in tableRows[1:]:
+  day = row.find_all(['td','th']) 
+  ptv_date = day[0].text  
+  ptv_pct_deliv = day[1].text
+  ptv_ontime = day[2].text
+
+  #df = df.append({'Date': ptv_date, '% delivered': ptv_pct_deliv, '% on time': ptv_ontime}, ignore_index = True)
+
+  titles=['Date','% delivered', '% on time']
+  data={'Date': ptv_date, '% delivered': ptv_pct_deliv, '% on time': ptv_ontime}
