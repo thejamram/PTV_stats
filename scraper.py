@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup 
 import requests 
 import re 
-import csv
-import pandas as pd
+#import csv
+#import pandas as pd
 
 df = pd.DataFrame(columns=['Date','% delivered', '% on time'])
 
