@@ -22,3 +22,5 @@ for row in tableRows[1:]:
 
   titles=['Date','% delivered', '% on time']
   data={'Date': ptv_date, '% delivered': ptv_pct_deliv, '% on time': ptv_ontime}
+  
+  scraperwiki.sqlite.save(unique_keys=['Date'], data=data)
