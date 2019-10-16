@@ -4,7 +4,7 @@ import re
 #import csv
 #import pandas as pd
 
-df = pd.DataFrame(columns=['Date','% delivered', '% on time'])
+#df = pd.DataFrame(columns=['Date','% delivered', '% on time'])
 
 url = "https://www.ptv.vic.gov.au/footer/data-and-reporting/network-performance/daily-performance/" 
 res = requests.get(url) 
